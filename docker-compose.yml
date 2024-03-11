@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:13.14-alpine3.19
+    container_name: shared_pg
+    restart: always
+    env_file:
+      - .pg.env
+    volumes:
+      - pg:/var/lib/postgresql/data
+    networks:
+      - psbd
+    ports:
+      - '5432:5432'
+
+  admin:
+    build: 
+      context: services/admin/
+    image: admin_grpc
+    container_name: 'admin-service'
+    depends_on:
+      - postgres
+    env_file:
+      - .pg.env
+    environment:
+      - WAIT_HOST=postgres:5432
+    networks:
+      - psbd
+    ports:
+      - '5082:8000'
+
+volumes:
+  pg:
+
+networks:
+  auth:
+  psbd:
