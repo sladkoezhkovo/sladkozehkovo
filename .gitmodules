@@ -4,3 +4,6 @@
 [submodule "gateway"]
 	path = gateway
 	url = https://github.com/sladkoezhkovo/gateway.git
+[submodule "services/admin"]
+	path = services/admin
+	url = https://github.com/sladkoezhkovo/admin-service
